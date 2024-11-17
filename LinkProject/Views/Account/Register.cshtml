@@ -6,7 +6,15 @@
 
 <h1>Register</h1>
 
-<h4>RegesterDto</h4>
+<ul>
+    
+        @if ( TempData["Message"]!=null)
+        {
+    <li>@TempData["Message"]</li>
+        }
+
+    
+</ul>
 <hr />
 <div class="row">
     <div class="col-md-4">
