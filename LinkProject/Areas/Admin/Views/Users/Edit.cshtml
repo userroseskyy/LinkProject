@@ -1,26 +1,24 @@
-﻿@model LinkProject.Models.Dto.RegesterDto
+﻿@model LinkProject.Areas.Admin.Models.UserEditDto
 
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Edit";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Register</h1>
+<h1>ویرایش</h1>
 
-<ul>
-    
-        @if ( TempData["Message"]!=null)
-        {
-            
-    <li>@TempData["Message"]</li>
-        }
-
-    
-</ul>
+<h4>UserEditDto</h4>
+<div>
+    @if(TempData["Message"]!=null){
+        <text>@TempData["Message"]</text>
+    }
+</div>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Register">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
                 <input asp-for="FirstName" class="form-control" />
@@ -37,17 +35,17 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
+                <label asp-for="UserName" class="control-label"></label>
+                <input asp-for="UserName" class="form-control" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                <label asp-for="PhoneNamber" class="control-label"></label>
+                <input asp-for="PhoneNamber" class="form-control" />
+                <span asp-validation-for="PhoneNamber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
