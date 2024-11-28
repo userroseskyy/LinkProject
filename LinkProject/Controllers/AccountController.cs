@@ -76,8 +76,9 @@ namespace LinkProject.Controllers
 
             }
 
+
             
-            return View() ;
+            return RedirectToAction("Register") ;
         }
         [HttpGet]
         public IActionResult LogOut()
