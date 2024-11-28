@@ -12,6 +12,8 @@ namespace LinkProject.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<User> _userManager;
+
+
         public UsersController(UserManager<User> userManager)
         {
             _userManager = userManager;
@@ -139,6 +141,19 @@ namespace LinkProject.Areas.Admin.Controllers
             return RedirectToAction("index");
             
             
+        }
+        public IActionResult Details(string id) 
+        { 
+            var user=_userManager.FindByIdAsync(id).Result;
+            UserDetailDto userDetail = new UserDetailDto()
+            {
+                Id=user.Id,
+                FullName=$"{user.FirstName} {user.LastName}",
+                UserName=user.UserName,
+                Email=user.Email,
+                PhoneNumber=user.PhoneNumber
+            };
+            return View(userDetail);
         }
 
        
