@@ -1,9 +1,13 @@
 ﻿
 using LinkProject.Areas.Admin.Models.Dto.UserDto;
+using LinkProject.Migrations;
 using LinkProject.Models.Dto;
+using LinkProject.Models.Role;
 using LinkProject.Models.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 
 namespace LinkProject.Areas.Admin.Controllers
@@ -12,11 +16,13 @@ namespace LinkProject.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<LinkProject.Models.Role.Role> _RoleManager;
 
 
-        public UsersController(UserManager<User> userManager)
+        public UsersController(UserManager<User> userManager, RoleManager<LinkProject.Models.Role.Role> RoleManager)
         {
             _userManager = userManager;
+            _RoleManager = RoleManager;
         }
         [HttpGet]
 
@@ -155,12 +161,91 @@ namespace LinkProject.Areas.Admin.Controllers
             };
             return View(userDetail);
         }
-        public IActionResult AddUserRole(string id)
+        //گرفتن نقش های کاربر
+        [HttpGet]
+        public IActionResult UserRole(string id)
         {
+            var user=_userManager.FindByIdAsync(id).Result;
 
-            return View();
+            var roles = _userManager.GetRolesAsync(user).Result;
+
+            UserRoleDto addUserRole = new UserRoleDto()
+            {
+                Id=user.Id,
+                FullName=$"{user.FirstName} {user.LastName}",
+                RoleName=roles.ToList(),
+            };
+
+            return View(addUserRole);
            
         }
+        /// <summary>
+        /// افزودن نقش به کاربر 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult AddUserRole(string Id)
+        {
+            var user = _userManager.FindByIdAsync(Id).Result;
+            var roles = _RoleManager.Roles.Select(p => new SelectListItem
+            {
+                Text=p.Name,
+                Value=p.Name
+            }).ToList();
+           
+            AddUserRoleDto addUserRole = new AddUserRoleDto()
+            {
+                Id=user.Id,
+                FullName=$"{user.FirstName} {user.LastName}",
+                UserName = user.UserName,
+                Roles=roles
+
+            };
+            return View(addUserRole);
+
+        }
+        [HttpPost]
+        public IActionResult AddUserRole(AddUserRoleDto addUserRoleDto)
+        {
+            var user = _userManager.FindByIdAsync(addUserRoleDto.Id).Result;
+
+          var res=  _userManager.IsInRoleAsync(user, addUserRoleDto.Role).Result;
+
+            if (res==true) 
+            {
+                addUserRoleDto.Roles = _RoleManager.Roles.Select(p => new SelectListItem
+                {
+                    Text = p.Name,
+                    Value = p.Name
+                }).ToList();
+                ModelState.AddModelError("", "این نقش از قبل به کاربر تخصیص داده شده است.");
+                return View(addUserRoleDto);
+            }
+            var result=_userManager.AddToRoleAsync(user,addUserRoleDto.Role).Result;
+            if (result.Succeeded) 
+            {
+                return RedirectToAction("index");
+            }
+           
+            return View();
+
+        }
+        [HttpGet]
+        public IActionResult DeleteUserRole(DeleteUserRoleDto deleteUserRole) 
+        {
+            var user = _userManager.FindByIdAsync(deleteUserRole.id).Result;
+            var result = _userManager.RemoveFromRoleAsync(user, deleteUserRole.roleName).Result;
+            if (result.Succeeded)
+            {
+                return RedirectToAction("UserRole", new { id = user.Id });
+            }
+            return View();
+        }
+       
+
+
+
 
     }
 }

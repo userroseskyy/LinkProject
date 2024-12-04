@@ -5,7 +5,7 @@
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Index</h1>
+<h1>لیست کاربران</h1>
 
 <p>
     <a asp-action="Create">افزودن کاربر </a>
@@ -58,9 +58,11 @@
                 @Html.DisplayFor(modelItem => item.AccessFailedCount)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id })
+                @Html.ActionLink("ویرایش", "Edit", new {  id=item.Id }) |
+                @Html.ActionLink("اطلاعات کاربر", "Details", new {  id=item.Id  }) |
+                @Html.ActionLink("حذف", "Delete", new {  id=item.Id })|
+                    @Html.ActionLink("نقش های کاربر", "UserRole", new { id = item.Id })
+                   
             </td>
         </tr>
 }

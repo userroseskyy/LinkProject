@@ -105,5 +105,6 @@ namespace LinkProject.Areas.Admin.Controllers
             }
             return View(role);
         }
+
     }
 }

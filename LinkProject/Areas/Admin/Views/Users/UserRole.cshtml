@@ -1,0 +1,55 @@
+﻿@model LinkProject.Areas.Admin.Models.Dto.UserDto.UserRoleDto
+
+@{
+    ViewData["Title"] = "UserRole";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>نقش های کاربر</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+    </dl>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>نقش</th>
+            <th>عملیات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.RoleName != null && Model.RoleName.Any())
+        {
+            @foreach (var role in Model.RoleName)
+            {
+                <tr>
+                    <td>@role</td>
+                    <td>
+                        @Html.ActionLink("حذف", "DeleteUserRole", new { id = Model.Id, roleName = role }, new { @class = "btn btn-danger btn-sm" }) |
+                       
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2" class="text-center">هیچ نقشی یافت نشد.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    @Html.ActionLink("افزودن نقش", "AddUserRole", new { id = Model.Id }, new { @class = "btn btn-success" }) |
+    <a asp-action="Index" class="btn btn-secondary">بازگشت</a>
+</div>
