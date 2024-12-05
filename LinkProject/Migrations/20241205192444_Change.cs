@@ -5,7 +5,7 @@
 namespace LinkProject.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateDb : Migration
+    public partial class Change : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

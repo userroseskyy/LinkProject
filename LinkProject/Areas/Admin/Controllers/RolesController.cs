@@ -1,6 +1,7 @@
 ﻿
 using LinkProject.Areas.Admin.Models.Dto.RoleDto;
 using LinkProject.Models.Role;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 namespace LinkProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    
     public class RolesController : Controller
     {
        

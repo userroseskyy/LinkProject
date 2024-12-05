@@ -1,22 +1,25 @@
 ﻿
 using LinkProject.Areas.Admin.Models.Dto.UserDto;
-using LinkProject.Migrations;
+
 using LinkProject.Models.Dto;
 using LinkProject.Models.Role;
 using LinkProject.Models.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Role = LinkProject.Models.Role.Role;
 
 
 
 namespace LinkProject.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    
     public class UsersController : Controller
     {
         private readonly UserManager<User> _userManager;
-        private readonly RoleManager<LinkProject.Models.Role.Role> _RoleManager;
+        private readonly RoleManager<Role> _RoleManager;
 
 
         public UsersController(UserManager<User> userManager, RoleManager<LinkProject.Models.Role.Role> RoleManager)

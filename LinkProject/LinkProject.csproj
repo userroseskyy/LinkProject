@@ -23,6 +23,8 @@
 
   <ItemGroup>
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Profile\Data\" />
+    <Folder Include="wwwroot\icons\" />
   </ItemGroup>
 
 </Project>
